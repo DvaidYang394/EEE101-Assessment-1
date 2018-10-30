@@ -1,1 +1,2 @@
-This the README file for the EEE101 Assessment 1 Project.
+# EEE101-Assessment-1
+The Assessment 1 for EEE101
