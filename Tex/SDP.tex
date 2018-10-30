@@ -1,0 +1,509 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LaTeX Template: Project Titlepage Modified (v 0.1) by rcx
+%
+% Original Source: http://www.howtotex.com
+% Date: February 2014
+% 
+% This is a title page template which be used for articles & reports.
+% 
+% This is the modified version of the original Latex template from
+% aforementioned website.
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt]{article}
+\usepackage[a4paper]{geometry}
+\usepackage[myheadings]{fullpage}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx, wrapfig, subcaption, setspace, booktabs}
+\usepackage[T1]{fontenc}
+\usepackage[font=small, labelfont=bf]{caption}
+\usepackage{fourier}
+\usepackage[protrusion=true, expansion=true]{microtype}
+\usepackage[english]{babel}
+\usepackage{sectsty}
+\usepackage{url, lipsum}
+\usepackage{indentfirst}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{enumerate}
+
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\onehalfspacing
+\setcounter{tocdepth}{5}
+\setcounter{secnumdepth}{5}
+
+
+%-------------------------------------------------------------------------------
+% HEADER & FOOTER
+%-------------------------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\setlength\headheight{15pt}
+\fancyhead[L]{EEE101 C Programming and Software Engineering 1}
+\fancyhead[R]{Assignment 1 Report}
+\fancyfoot[R]{Page \thepage\ of \pageref{LastPage}}
+%-------------------------------------------------------------------------------
+% TITLE PAGE
+%-------------------------------------------------------------------------------
+
+\begin{document}
+	
+	\title{ \normalsize \textsc{}
+		\\ [2.0cm]
+		\HRule{0.5pt} \\
+		\LARGE \textbf{EEE101 C Programming Report\\Assignment 1}
+		\HRule{2pt} \\ [0.5cm]
+		\normalsize Oct 22, 2018 \vspace*{5\baselineskip}}
+	
+	\date{}
+	
+	\author{
+		Name: Ziqi Yang\\
+		ID: 1718112\\
+	}
+	
+	\maketitle
+	\newpage
+	\tableofcontents
+	\newpage
+	
+	%-------------------------------------------------------------------------------
+	% Section title formatting
+	%\sectionfont{\scshape}
+	%-------------------------------------------------------------------------------
+	
+	%-------------------------------------------------------------------------------
+	% Introduction
+	%-------------------------------------------------------------------------------
+	\section{Problem Statement}
+	
+	\subsection{Introduction}
+	Provide an interface through which user can input full name, telephone number, a 2-digit decimal number and a temperature in degrees Celsius. The limitations of the input data are as follows:
+	
+	\begin{enumerate}
+	\item For the full name, users are allowed to input letters or spaces.
+	\item For the telephone number, users are able to input 11-digit number only.
+	\item For the 2-digit decimal number, users can input positive 2-digit number only.
+	\item For the temperature in degree Celsius, users are allowed to input positive integer or float.
+	\end{enumerate}
+
+	\subsection{Inputs}
+	If an illegal input is detected, users have a certain number of attempts to re-enter the data again. The value of attempts is defined as ERR\_ATTEMPTE in the program code (default is 3). If the attempts are all consumed, the function is running will be jump out, and then user will go to the next function automatically. Being illegal input may be defined as follows:
+	
+	\begin{enumerate}
+	\item For the full name:
+	
+		\begin{enumerate}
+		\item The input name is too long that out of the character limitation (defined as NAME\_L\\ENGTH, default is 50).
+		\item The input name has character which is not letters or spaces.
+		\item The input name is not full name, which means only input part of the name, or there is no space between different parts of the name.
+		\end{enumerate}
+	
+	\item For the phone number:
+	
+		\begin{enumerate}
+		\item The input phone number is shorter or longer than standard phone number length (defined as PHONE\_LENGTH, default is 11).
+		\item The input phone number has character which is not digit.
+		\end{enumerate}
+	
+	\item For the 2-digit decimal number:
+	
+		\begin{enumerate}
+		\item The input number is shorter or longer than standard length (defined as NUMBER\_LENGTH, default is 2).
+		\item The input number has character which is not digit.
+		\end{enumerate}
+	
+	\item For the temperature:
+	
+		\begin{enumerate}
+		\item The input temperature is too long that out of the character limitation (defined as TEMPER\_LENGTH, default is 10).
+		\item The input temperature has character which is not digit or $"."$ sign.
+		\end{enumerate}
+	
+	\end{enumerate}
+
+	\subsection{Outputs}
+	Each program will display some information after user input data. The types of output details are as follows:
+	
+	\begin{enumerate}
+	\item If the user input is correct:
+	
+		\begin{enumerate}
+		\item For the full name, output is the sum of character value of the name (without space in the name).
+		\item For the phone number, output is the value of first 6 digits divide by the last 5 digits.
+		(Ps. If the last 5 digits are all 0, a warning will appear to ask user whether to try again or continue running).
+		\item For the 2-digit decimal number, output is the binary value of it.
+		\item For the temperature, output is the value of temperature in degrees Celsius, degrees Fahrenheit and degrees Kelvin.
+		\end{enumerate}
+	
+	\item If the user input is incorrect, output is the reason of incorrect and a notification to ask user input again.
+	\end{enumerate}
+	
+	\subsection{Exit}
+	If the user input is incorrect, output is the reason of incorrect and a notification to ask user input again.
+
+	%-------------------------------------------------------------------------------
+	% Experimental Setup and Procedure
+	%-------------------------------------------------------------------------------
+	\section{Analysis}
+	
+	\subsection{On inputs}
+	Firstly, a message needs to be printed on the screen to let the users know what data/action this program expects. Because the execution is not terminated immediately once an illegal input is detected, but need to ask users know the reason of error and give them a few attempts to re-enter the data, the program needs to do input legality verification when the attempts for users to re-enter data are not 0. Therefore, the program should accept all kinds of data which user input, so that it can check the legality of all data.
+	
+	\subsection{On outputs}
+	Because the data input by user cannot be predicted before they enter, the outputs are need to be discussed in two types of result, which are correct output with legal input and incorrect output with illegal input. The details of the two types of outputs will be shown as follows:
+	
+	\begin{enumerate}
+		\item The inputs are legal and outputs are correct:
+	
+		\begin{enumerate}
+			\item For the full name, the sum of character values of name should be calculated correctly.
+			\item For the phone number, the value of first 6 digits divide by the last 5 digits should be calculated correctly.
+			\item For the 2-digit decimal number, the binary value of it should be calculated correctly.
+			\item For the temperature, the value of temperature in degrees Celsius, degrees Fahrenheit and degrees Kelvin should be calculated correctly.
+		\end{enumerate}
+		
+		All of these outputs are needed to printed on the screen with clear text messages.
+	
+		\item The inputs are illegal and outputs are incorrect:
+		
+		The reason of inputs illegal should be printed on screen, ask users to input again and the value of rest of attempts should be shown to the users.
+	\end{enumerate}
+
+	\subsection{Data structure}
+	
+	\begin{enumerate}
+		\item Structure:\\
+		Define four types of structure type, record all data related to the type with the structure type, and store different types of data with structural members of different types in the structure type.
+		
+		\item Array:\\
+		Define array as one of members of the structure type, to organize and store several variables of the same type in an orderly fashion.
+		
+		\item Some single data to save local variable data.
+	\end{enumerate}
+
+	\subsection{Algorithm}
+	
+	\begin{enumerate}
+		\item For the full name:\\
+		Use addition to calculate the character value of name.
+		
+		\item For the phone number:\\
+		Use division to calculate the answer.
+		
+		\item For the 2-digit decimal number:\\
+		Use short division to calculate binary value.
+		
+		\item For the temperature:\\
+		Use two equation to calculate Fahrenheit and Kelvin by Celsius.
+		
+		\begin{enumerate}
+			\item fahrenheit = 9/5 * Celsius + 32
+			
+			\item Kelvin = Celsius + 273.15
+		\end{enumerate}
+	
+	\end{enumerate}
+	
+	
+	
+	%-------------------------------------------------------------------------------
+	% Results and Discussion
+	%-------------------------------------------------------------------------------
+	\section{Design}
+	
+	\subsection{For the full name}
+	
+	\begin{enumerate}
+		\item Declare Name\_Struct type with a variable name, and members to store data about full name.
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|c|l|}
+				\hline
+				full{[}256{]} & An array up to store full name as string. \\ \hline
+				length        & The length of name.                       \\ \hline
+				sum           & The sum of character values of the name.  \\ \hline
+				err\_reason   & The reason of error occurs.               \\ \hline
+				result        & The run result of the name read function. \\ \hline
+			\end{tabular}
+		\end{table}
+		\item Print a message on the screen to ask the user to input the full name.
+		
+		\item Read the full name and assign it to name.full.
+		
+		\item Check if the value of name.full is legal.
+		
+		\item Re-enter if the value is incorrect. If there is no attempt, jump out to the next function.
+		
+		\item Calculate the sum of character value of the name.
+		
+		\item Print the result on the screen and give clear text message, then go to the next function.
+	\end{enumerate}
+
+	\subsection{For the phone number}
+	
+	\begin{enumerate}
+		\item Declare Phone\_Struct type with a variable phone, and members to store data about phone number.
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|c|l|}
+				\hline
+				number{[}256{]}    & An array to store phone number as string.                                                       \\ \hline
+				length             & The length of phone number.                                                                     \\ \hline
+				numerator{[}7{]}   & \begin{tabular}[c]{@{}l@{}}An array to store first 6 digits of the phone\\ number.\end{tabular} \\ \hline
+				denominator{[}6{]} & \begin{tabular}[c]{@{}l@{}}An array to store last 5 digits of the phone\\ number.\end{tabular}  \\ \hline
+				value              & The operate value.                                                                              \\ \hline
+				err\_reason        & The reason of error occurs.                                                                     \\ \hline
+				result             & The run result of the phone read function.                                                      \\ \hline
+			\end{tabular}
+		\end{table}
+		\item Print a message on the screen to ask the user to input the phone number.
+	
+		\item Read the phone number and assign it to phone.number.
+	
+		\item Check if the value of phone.number is legal.
+	
+		\item Re-enter if the value is incorrect. If there is no attempt, jump out to the next function.
+	
+		\item Calculate the operate value of phone number.
+	
+		\item Print the result on the screen and give clear text message, then go to the next function.
+	\end{enumerate}
+
+	\subsection{For the 2-digit decimal number}
+
+	\begin{enumerate}
+		\item Declare Number\_Struct type with a variable number, and members to store data about 2-digit decimal number.
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|c|l|}
+				\hline
+				decimal{[}256{]} & An array to store the 2 digit number as string. \\ \hline
+				length           & The length of the number.                       \\ \hline
+				binary           & The number in binary.                           \\ \hline
+				err\_reason      & The reason of error occurs.                     \\ \hline
+				result           & The run result of the number read function.     \\ \hline
+			\end{tabular}
+		\end{table}
+		\item Print a message on the screen to ask the user to input the 2-digit decimal number.
+	
+		\item Read the 2-digit decimal number and assign it to number.decimal.
+	
+		\item Check if the value of number.decimal is legal.
+	
+		\item Re-enter if the value is incorrect. If there is no attempt, jump out to the next function.
+	
+		\item Calculate the binary of the decimal number.
+	
+		\item Print the result on the screen and give clear text message, then go to the next function.
+	\end{enumerate}
+	
+	\subsection{For the temperature}
+
+	\begin{enumerate}
+		\item Declare Temper\_Struct type with a variable temper, and members to store data about temperature.
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{|c|l|}
+				\hline
+				celsius{[}256{]} & \begin{tabular}[c]{@{}l@{}}An array to store temperature in degrees Celsius\\ as string.\end{tabular} \\ \hline
+				length           & \begin{tabular}[c]{@{}l@{}}The length of the temperature in degrees\\ Celsius.\end{tabular}           \\ \hline
+				fahrenheit       & The temperature in degrees Fahrenheit.                                                                \\ \hline
+				kelvin           & The temperature in degrees Kelvin.                                                                    \\ \hline
+				err\_reason      & The reason of error occurs.                                                                           \\ \hline
+				result           & The run result of the temperature read function.                                                      \\ \hline
+			\end{tabular}
+		\end{table}
+		\item Print a message on the screen to ask the user to input the temperature.
+	
+		\item Read the temperature and assign it to temper.celsius.
+	
+		\item Check if the value of temper.celsius is legal.
+	
+		\item Re-enter if the value is incorrect. If there is no attempt, jump out to the next function.
+	
+		\item Calculate the Fahrenheit and Kelvin temperature.
+	
+		\item Print the result on the screen and give clear text message, then exit the program.
+	\end{enumerate}	
+	
+	%-------------------------------------------------------------------------------
+	% Conclusion
+	%-------------------------------------------------------------------------------
+	\section{Implementation}
+	See the C code “1718112\_1.c” with comments.
+	
+	%-------------------------------------------------------------------------------
+	% Figures of Experiment Data Record
+	%-------------------------------------------------------------------------------
+	\section{Testing}
+	
+	\subsection{For the full name}
+	\noindent Test 1:\\
+	Please input your full name:Ziqi Yang\\
+	The sum of the chapter values of Ziqi Yang is 812.\\
+	
+	\noindent Test 2:\\
+	Please input your full name:David Yang\\
+	The sum of the chapter values of David Yang is 887.\\
+	
+	\noindent Test 3:\\
+	Please input your full name:Ziqi123 Yang\\
+	There are illegal characters in the name.\\\\
+	You have 3 attempts to try again!Please input your full name:ziqi..\\
+	There are illegal characters in the name.\\\\
+	You have 2 attempts to try again!Please input your full name:   Yang\\
+	The name is not full name.\\\\	
+	You have 1 attempts to try again!Please input your full name:Ziqi Yang\\
+	The sum of the chapter values of Ziqi Yang is 812.\\
+	
+	\noindent Test 4:\\
+	Please input your full name:Ziqi\\
+	The name is not full name.\\\\
+	You have 3 attempts to try again!Please input your full name:Ziqi 394\\
+	There are illegal characters in the name.\\\\	
+	You have 2 attempts to try again!Please input your full name:ziqiasdfghjkl qqewqtreyrueiureroeiroriweiwoieqofhsajfak\\
+	The name is too long.\\\\	
+	You have 1 attempts to try again!Please input your full name:Ziqi Yang\\
+	The sum of the chapter values of Ziqi Yang is 812.\\
+	
+	\noindent Test 5:\\
+	Please input your full name:Test Ziqi Yang123\\
+	There are illegal characters in the name.\\\\	
+	You have 3 attempts to try again!Please input your full name:Ziqi\\
+	The name is not full name.\\\\	
+	You have 2 attempts to try again!Please input your full name:ziqi yang333\\
+	There are illegal characters in the name.\\\\	
+	You have 1 attempts to try again!Please input your full name:12 345\\
+	There are illegal characters in the name.\\\\	
+	You have no attempts to try again, it will go to next function.
+	
+	
+	\subsection{For the phone number}
+	\noindent Test 1:\\
+	Please input your 11 digit phone number:12345678901\\
+	The value of 123456 / 78901 is 1.56\\
+	
+	\noindent Test 2:\\
+	Please input your 11 digit phone number:10945629651\\
+	The value of 109456 / 29651 is 3.69\\
+	
+	\noindent Test 3:\\
+	Please input your 11 digit phone number:12345275381aaaa\\
+	The phone number is too long.\\\\	
+	You have 3 attempts to try again!Please input your 11 digit phone number:1234527\\
+	The phone number is too short.\\\\	
+	You have 2 attempts to try again!Please input your 11 digit phone number:1234567wsd1\\
+	There are illegal characters in the phone number.\\\\	
+	You have 1 attempts to try again!Please input your 11 digit phone number:12345678901\\
+	The value of 123456 / 78901 is 1.56\\
+	
+	\noindent Test 4:\\
+	Please input your 11 digit phone number:123,356,yu2\\
+	There are illegal characters in the phone number.\\\\	
+	You have 3 attempts to try again!Please input your 11 digit phone number:12378452974\\
+	The value of 123784 / 52974 is 2.34\\
+	
+	\noindent Test 5:\\
+	Please input your 11 digit phone number:1234567 897\\
+	There are illegal characters in the phone number.\\\\	
+	You have 3 attempts to try again!Please input your 11 digit phone number:12398\\
+	The phone number is too short.\\\\	
+	You have 2 attempts to try again!Please input your 11 digit phone number:12346098653332234\\
+	The phone number is too long.\\\\	
+	You have 1 attempts to try again!Please input your 11 digit phone number:1237chdsijda\\
+	The phone number is too long.\\\\	
+	You have no attempts to try again, it will go to next function.
+	
+	\subsection{For the 2-digit decimal number}
+	\noindent Test 1:\\
+	Please input a 2 digit decimal number:16\\
+	The binary of 16 is 10000.\\
+	
+	\noindent Test 2:\\
+	Please input a 2 digit decimal number:59\\
+	The binary of 59 is 111011.\\
+	
+	\noindent Test 3:\\
+	Please input a 2 digit decimal number:2\\
+	The number is too short.\\\\	
+	You have 3 attempts to try again!Please input a 2 digit decimal number:2222\\
+	The number is too long.\\\\	
+	You have 2 attempts to try again!Please input a 2 digit decimal number:1a\\
+	There are illegal characters in the number.\\\\	
+	You have 1 attempts to try again!Please input a 2 digit decimal number:23\\
+	The binary of 23 is 10111.\\
+	
+	\noindent Test 4:\\
+	Please input a 2 digit decimal number:2\\
+	There are illegal characters in the number.\\\\	
+	You have 3 attempts to try again!Please input a 2 digit decimal number:,;\\
+	There are illegal characters in the number.\\\\	
+	You have 2 attempts to try again!Please input a 2 digit decimal number:-o\\
+	There are illegal characters in the number.\\\\	
+	You have 1 attempts to try again!Please input a 2 digit decimal number:63\\
+	The binary of 63 is 111111.\\
+	
+	\noindent Test 5:\\
+	Please input a 2 digit decimal number:we\\
+	There are illegal characters in the number.\\\\	
+	You have 3 attempts to try again!Please input a 2 digit decimal number:2\\
+	The number is too short.\\\\	
+	You have 2 attempts to try again!Please input a 2 digit decimal number:34657656\\
+	The number is too long.\\\\	
+	You have 1 attempts to try again!Please input a 2 digit decimal number:j-0sa\\
+	The number is too long.\\\\	
+	You have no attempts to try again, it will go to next function.
+	
+	\subsection{For the temperature}
+	\noindent Test 1:\\
+	Please input a temperature in degrees Celsius:12\\
+	The temperture in degrees Celsius is 12$^\circ$C.\\
+	The temperture in degrees Fahrenheit is 44$^\circ$F.\\
+	The temperture in degrees Kelvin is 285 K.\\
+	
+	\noindent Test 2:\\
+	Please input a temperature in degrees Celsius:12.64\\
+	The temperture in degrees Celsius is 13$^\circ$C.\\
+	The temperture in degrees Fahrenheit is 45$^\circ$F.\\
+	The temperture in degrees Kelvin is 286 K.\\
+	
+	\noindent Test 3:\\
+	Please input a temperature in degrees Celsius:1a\\
+	There are illegal characters in the temperature.\\\\	
+	You have 3 attempts to try again!Please input a temperature in degrees Celsius:12.5.6\\
+	There are illegal characters in the temperature.\\\\	
+	You have 2 attempts to try again!Please input a temperature in degrees Celsius:36\\
+	The temperture in degrees Celsius is 36$^\circ$C.\\
+	The temperture in degrees Fahrenheit is 68$^\circ$F.\\
+	The temperture in degrees Kelvin is 309 K.\\
+	
+	\noindent Test 4:\\
+	Please input a temperature in degrees Celsius:98.75.a\\
+	There are illegal characters in the temperature.\\\\	
+	You have 3 attempts to try again!Please input a temperature in degrees Celsius:111111.1111111111111111111111111\\
+	The temperature is too long.\\\\	
+	You have 2 attempts to try again!Please input a temperature in degrees Celsius:12.25a\\
+	There are illegal characters in the temperature.\\\\	
+	You have 1 attempts to try again!Please input a temperature in degrees Celsius:12.4\\
+	The temperture in degrees Celsius is 12$^\circ$C.\\
+	The temperture in degrees Fahrenheit is 44$^\circ$F.\\
+	The temperture in degrees Kelvin is 286 K.\\
+	
+	\noindent Test 5:\\
+	Please input a temperature in degrees Celsius:12.a\\
+	There are illegal characters in the temperature.\\\\	
+	You have 3 attempts to try again!Please input a temperature in degrees Celsius:asdf\\
+	There are illegal characters in the temperature.\\\\	
+	You have 2 attempts to try again!Please input a temperature in degrees Celsius:12.8.0\\
+	There are illegal characters in the temperature.\\\\	
+	You have 1 attempts to try again!Please input a temperature in degrees Celsius:12 45.=\\
+	There are illegal characters in the temperature.\\\\	
+	You have no attempts to try again, the programme will exit.
+	
+\end{document}

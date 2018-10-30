@@ -1,0 +1,8 @@
+﻿  1718112_1.c
+f:\xjtlu\lessons\year 2 semester 1\eee101\assessment 1\project\project\1718112_1.c(231): warning C4013: 'gets' undefined; assuming extern returning int
+f:\xjtlu\lessons\year 2 semester 1\eee101\assessment 1\project\project\1718112_1.c(278): warning C4018: '<': signed/unsigned mismatch
+f:\xjtlu\lessons\year 2 semester 1\eee101\assessment 1\project\project\1718112_1.c(481): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdlib.h(1323): note: see declaration of 'itoa'
+f:\xjtlu\lessons\year 2 semester 1\eee101\assessment 1\project\project\1718112_1.c(499): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+f:\xjtlu\lessons\year 2 semester 1\eee101\assessment 1\project\project\1718112_1.c(500): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Project.vcxproj -> F:\XJTLU\Lessons\Year 2 Semester 1\EEE101\Assessment 1\Project\Debug\Project.exe
